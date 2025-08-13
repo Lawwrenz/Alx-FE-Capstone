@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { searchBooks } from "../utils/api";
+import { searchBooks } from "../utils/api.js";
 
 export const useBooksApi = (query) => {
   const [books, setBooks] = useState([]);
@@ -16,8 +16,11 @@ export const useBooksApi = (query) => {
         setError(null);
       })
       .catch((err) => {
-        setError("Failed to fetch books....Please try again later.");
-        setBooks([]);
+        setError(
+          err.message.includes("Network Error")
+            ? "Network error. Check your connection."
+            : "Failed to fetch books."
+        );
       })
       .finally(() => setLoading(false));
   }, [query]);

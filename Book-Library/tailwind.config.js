@@ -1,6 +1,6 @@
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  darkMode: false, // You can set it to 'media' or 'class' if needed
+  darkMode: "media", // or "class" if you want manual dark mode toggling
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
