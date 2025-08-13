@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SearchBar from "../components/search/SearchBar.jsx";
 import Spinner from "../components/ui/Spinner.jsx";
-import useBooksApi from "../hooks/useBooksApi.js";
+import {useBooksApi} from "../hooks/useBooksApi";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");

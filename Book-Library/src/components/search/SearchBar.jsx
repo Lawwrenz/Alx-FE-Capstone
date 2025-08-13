@@ -1,4 +1,5 @@
 import { FiSearch } from "react-icons/fi";
+import { useState } from "react";
 
 export default function SearchBar({ onSearch }) {
   const [query, setQuery] = useState("");
