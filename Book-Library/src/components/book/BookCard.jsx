@@ -1,22 +1,28 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function BookCard({ book }) {
+  const [imageError, setImageError] = useState(false);
+
   return (
     <Link 
       to={`/book/${book.key.replace("/works/", "")}`}
       className="group block"
     >
-      <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform group-hover:scale-105">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg">
         {/* Cover Image */}
         <div className="aspect-[2/3] bg-gray-100 flex items-center justify-center">
-          {book.cover_i ? (
+          {book.cover_i && !imageError ? (
             <img
               src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
               alt={book.title}
               className="object-cover w-full h-full"
+              onError={() => setImageError(true)}
             />
           ) : (
-            <div className="text-gray-400 text-sm">No cover</div>
+            <div className="text-gray-400 text-sm p-4 text-center">
+              No cover available
+            </div>
           )}
         </div>
         
