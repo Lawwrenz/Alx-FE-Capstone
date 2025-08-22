@@ -6,7 +6,7 @@ export default function BookCard({ book }) {
 
   return (
     <Link 
-      to={`/book/${book.key.replace("/works/", "")}`}
+      to={`/book/${book.key.replace("/works/", "")}`} // This is correct!
       className="group block"
     >
       <div className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg">
