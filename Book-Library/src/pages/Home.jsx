@@ -1,7 +1,8 @@
 import { useState } from "react";
 import SearchBar from "../components/search/SearchBar.jsx";
-import Spinner from "../components/ui/Spinner.jsx";
-import {useBooksApi} from "../hooks/useBooksApi";
+import BookSkeleton from "../components/ui/BookSkeleton.jsx";
+import { useBooksApi } from "../hooks/useBooksApi";
+import BookCard from "../components/book/BookCard";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,20 +13,31 @@ export default function Home() {
       <h1 className="text-3xl font-bold mb-6">Lawrence Book Library</h1>
       <SearchBar onSearch={setSearchQuery} />
 
-      {loading && <Spinner />}
       {error && <p className="text-red-500">{error}</p>}
-      {books.length === 0 && !loading && (
-        <p>No books found....Please Try another search..</p>
-      )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {books.map((book) => (
-          <div key={book.key} className="bg-white p-4 rounded shadow">
-            <h3 className="font-bold">{book.title}</h3>
-            <p>{book.author_name?.join(", ")}</p>
-          </div>
-        ))}
-      </div>
+      {loading ? (
+        // Show skeleton loading cards
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {[...Array(10)].map((_, index) => (
+            <BookSkeleton key={index} />
+          ))}
+        </div>
+      ) : (
+        // This is going to Show actual content
+        <>
+          {books.length === 0 ? (
+            <p className="text-gray-500 text-center py-8">
+              No books found. Try another search...
+            </p>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {books.map((book) => (
+                <BookCard key={book.key} book={book} />
+              ))}
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }
