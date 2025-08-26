@@ -1,47 +1,58 @@
 import { useState } from "react";
-import SearchBar from "../components/search/SearchBar.jsx";
-import BookSkeleton from "../components/ui/BookSkeleton";
-import { useBooksApi } from "../hooks/useBooksApi";
-import BookCard from "../components/book/BookCard";
-import { useDebounce } from "../hooks/useDebounce"; // Add this import
 
-export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const debouncedSearchQuery = useDebounce(searchQuery, 500); // 500ms delay
-  const { books, loading, error } = useBooksApi(debouncedSearchQuery);
+export default function SearchFilters({ onFilterChange }) {
+  const [filters, setFilters] = useState({
+    sort: "relevance",
+    language: "all"
+  });
+
+  const handleFilterChange = (key, value) => {
+    const newFilters = { ...filters, [key]: value };
+    setFilters(newFilters);
+    onFilterChange(newFilters);
+  };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Lawrence Book Library</h1>
-      <SearchBar onSearch={setSearchQuery} />
-
-      {error && <p className="text-red-500">{error}</p>}
-
-      {loading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {[...Array(10)].map((_, i) => (
-            <BookSkeleton key={i} />
-          ))}
+    <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+      <h3 className="font-semibold mb-3 text-gray-800">Filter Results</h3>
+      
+      <div className="flex flex-wrap gap-4">
+        {/* Sort By */}
+        <div>
+          <label className="block text-sm font-medium mb-1 text-gray-700">
+            Sort by
+          </label>
+          <select 
+            value={filters.sort}
+            onChange={(e) => handleFilterChange("sort", e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="relevance">Relevance</option>
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="title">Title A-Z</option>
+          </select>
         </div>
-      ) : (
-        <>
-          {books.length === 0 && searchQuery ? (
-            <p className="text-gray-500 text-center py-8">
-              No books found for "{searchQuery}". Try another search...
-            </p>
-          ) : books.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">
-              Search for books above to get started...
-            </p>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {books.map((book) => (
-                <BookCard key={book.key} book={book} />
-              ))}
-            </div>
-          )}
-        </>
-      )}
+
+        {/* Language Filter */}
+        <div>
+          <label className="block text-sm font-medium mb-1 text-gray-700">
+            Language
+          </label>
+          <select 
+            value={filters.language}
+            onChange={(e) => handleFilterChange("language", e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="all">All Languages</option>
+            <option value="eng">English</option>
+            <option value="spa">Spanish</option>
+            <option value="fre">French</option>
+            <option value="ger">German</option>
+            <option value="ita">Italian</option>
+          </select>
+        </div>
+      </div>
     </div>
   );
 }

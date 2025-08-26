@@ -2,17 +2,23 @@ import axios from "axios";
 
 export const API_BASE_URL = "https://openlibrary.org";
 
-export const searchBooks = async (query) => {
+export const searchBooks = async (query, filters = {}) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/search.json?q=${query}`);
-    return response.data.docs; // This returns an array of books
+    let url = `${API_BASE_URL}/search.json?q=${query}`;
+
+    // Add language filter if specified
+    if (filters.language && filters.language !== "all") {
+      url += `&language=${filters.language}`;
+    }
+
+    const response = await axios.get(url);
+    return response.data;
   } catch (error) {
     console.error("API Error:", error);
     throw error;
   }
 };
 
-// New funstion for book details
 export const getBookDetails = async (id) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/works/${id}.json`);
@@ -23,7 +29,6 @@ export const getBookDetails = async (id) => {
   }
 };
 
-// This is optional: Add this function for better cover images
 export const getBookCover = (coverId, size = "M") => {
   if (!coverId) return null;
   return `https://covers.openlibrary.org/b/id/${coverId}-${size}.jpg`;
