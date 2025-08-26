@@ -1,19 +1,24 @@
 import { useState } from "react";
 import SearchBar from "../components/search/SearchBar.jsx";
+import SearchFilters from "../components/search/SearchFilters"; // Add this import
 import BookSkeleton from "../components/ui/BookSkeleton";
 import { useBooksApi } from "../hooks/useBooksApi";
 import BookCard from "../components/book/BookCard";
-import { useDebounce } from "../hooks/useDebounce"; // Add this import
+import { useDebounce } from "../hooks/useDebounce";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
-  const debouncedSearchQuery = useDebounce(searchQuery, 500); // 500ms delay
-  const { books, loading, error } = useBooksApi(debouncedSearchQuery);
+  const [filters, setFilters] = useState({}); // Add filters state
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
+  const { books, loading, error } = useBooksApi(debouncedSearchQuery, filters); // Pass filters
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Lawrence Book Library</h1>
       <SearchBar onSearch={setSearchQuery} />
+      
+      {/* Add SearchFilters component */}
+      {books.length > 0 && <SearchFilters onFilterChange={setFilters} />}
 
       {error && <p className="text-red-500">{error}</p>}
 
