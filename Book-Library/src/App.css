@@ -1,3 +1,10 @@
+/* App.css */
+
+/* Global container and logo styles (existing) */
+:root {
+  /* Optional: you can move theme colors here for reuse */
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -39,4 +46,38 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Font imports (global)                                                       */
+/* -------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap');
+
+/* -------------------------------------------------------------------------- */
+/* Font utility classes (global)                                              */
+/* -------------------------------------------------------------------------- */
+.font-display-curvy {
+  /* Playful, curvy display font family; falls back gracefully */
+  font-family: 'Poppins', 'Baloo 2', 'Rubik', sans-serif;
+  /* You can optionally enforce a strong weight and tighter tracking here if desired */
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+.font-handwritten {
+  /* Handwritten / cursive feel for headlines or accents */
+  font-family: 'Dancing Script', 'Pacifico', 'Comic Neue', cursive;
+  font-weight: 600;
+  letter-spacing: .2px;
+}
+
+/* Optional: if you want to expose a responsive variant quickly */
+@media (max-width: 640px) {
+  .font-display-curvy {
+    font-weight: 700;
+  }
+  .font-handwritten {
+    font-weight: 600;
+  }
 }

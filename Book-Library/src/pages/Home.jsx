@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-4 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-gray-900">Lawrence Book Library</h1>
+      <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-teal-500 font-handwritten-displa">Book Library</h1>
       <SearchBar onSearch={setSearchQuery} />
       
       {/* Show filters only when we have results and no error */}
