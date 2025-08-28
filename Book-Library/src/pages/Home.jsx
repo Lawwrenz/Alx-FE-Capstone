@@ -2,10 +2,11 @@ import { useState } from "react";
 import SearchBar from "../components/search/SearchBar.jsx";
 import SearchFilters from "../components/search/SearchFilters";
 import BookSkeleton from "../components/ui/BookSkeleton";
-import ErrorMessage from "../components/ui/ErrorMessage"; // Add this import
+import ErrorMessage from "../components/ui/ErrorMessage";
 import { useBooksApi } from "../hooks/useBooksApi";
 import BookCard from "../components/book/BookCard";
 import { useDebounce } from "../hooks/useDebounce";
+import ThemeToggle from "../components/ThemeToggle";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,7 +21,14 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-4 min-h-screen">
-      <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-teal-500 font-handwritten-displa">Book Library</h1>
+      {/* Updated Header with ThemeToggle */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-teal-500 font-handwritten-display dark:text-teal-400">
+          Book Library
+        </h1>
+        <ThemeToggle />
+      </div>
+
       <SearchBar onSearch={setSearchQuery} />
       
       {/* Show filters only when we have results and no error */}
@@ -50,10 +58,10 @@ export default function Home() {
           {books.length === 0 && searchQuery ? (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold text-gray-700 mb-2">
+              <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
                 No books found
               </h3>
-              <p className="text-gray-500">
+              <p className="text-gray-500 dark:text-gray-400">
                 No results found for "<span className="font-medium">{searchQuery}</span>". 
                 Try different keywords or filters.
               </p>
@@ -61,17 +69,17 @@ export default function Home() {
           ) : books.length === 0 ? (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">📚</div>
-              <h3 className="text-xl font-semibold text-gray-700 mb-2">
+              <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
                 Welcome to Lawrence Book Library
               </h3>
-              <p className="text-gray-500">
+              <p className="text-gray-500 dark:text-gray-400">
                 Search for books above to discover amazing reads!
               </p>
             </div>
           ) : (
             <>
               <div className="flex justify-between items-center mb-4">
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-400">
                   Found {books.length} book{books.length !== 1 ? 's' : ''}
                 </p>
               </div>
