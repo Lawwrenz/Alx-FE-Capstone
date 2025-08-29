@@ -209,4 +209,6 @@ Create an issue on GitHub
 
 Check the React and Tailwind CSS documentation
 
+Deployed on vercel : https://alx-fe-capstone-q9uk.vercel.app/
+
 Happy Reading 📖✨
